@@ -19,7 +19,7 @@ const UserSchema = new  mongoose.Schema({
     type: Object
   },
   bio: {
-    type:Object,
+    type:String,
   },
   password: {
     type:String,
