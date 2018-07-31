@@ -7,6 +7,13 @@ const UserSchema = new  mongoose.Schema({
     type: String,
     unique:true
   },
+  duoVerifierId: {
+    type:Number
+  },
+  verified: {
+    type:Boolean,
+    default:false
+  },
   email: {
     type: String,
     required:true,

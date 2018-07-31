@@ -28,6 +28,6 @@ mongoose.model({
     default:'awaited'
   },
   winner: {
-    type:String, n
+    type:String,
   }
 });
