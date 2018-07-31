@@ -5,7 +5,6 @@
 const mongoose = require('mongoose');
 
 
-
 mongoose.model({
   title: {
     type:String
@@ -31,6 +30,4 @@ mongoose.model({
   winner: {
     type:String, n
   }
-
-
 });

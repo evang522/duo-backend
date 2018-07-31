@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const UserSchema = new  mongoose.Schema({
   duoId: {
     type: String,
-    required:true
+    unique:true
   },
   email: {
     type: String,
-    required:true
+    required:true,
+    unique:true
   },
   name: {
     type:String,
@@ -30,6 +31,16 @@ const UserSchema = new  mongoose.Schema({
     default: []
   }
 });
+
+
+UserSchema.set('toObject', {
+  transform: function (doc,ret) {
+    ret.id = doc._id;
+    delete ret.__v;
+    delete ret._id;
+
+  }
+})
 
 
 module.exports = mongoose.model('user', UserSchema);
