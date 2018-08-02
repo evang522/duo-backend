@@ -13,6 +13,10 @@ const challengeRoute = require('./routes/challenges.routes');
 const {PORT} = require('./config');
 const authRoute = require('./routes/auth.routes');
 
+//================================== Set Up CORS ====================>
+app.use(cors());
+
+
 //============================= JSON Parser ==========================>
 app.use(express.json());
 

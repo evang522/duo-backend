@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const UserSchema = new  mongoose.Schema({
   duoId: {
     type: String,
-    unique:true
   },
   duoVerifierId: {
     type:Number

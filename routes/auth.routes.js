@@ -12,7 +12,7 @@ router.use('/auth/login', (req,res,next) => {
   if (!email || !password) {
     const err = new Error();
     err.status = 400;
-    err.message = 'Missing username or password';
+    err.message = 'Email or password';
     return next(err);
   }
 
@@ -22,15 +22,15 @@ router.use('/auth/login', (req,res,next) => {
 
       if (!user) {
         const err = new Error();
-        err.status = 400;
-        err.message = '-User- or Password not recognized';
+        err.status = 403;
+        err.message = 'Email or Password not recognized';
         return next(err);
       }
 
       if (!user.verifyPassword(password)) {
         const err = new Error();
         err.status = 403;
-        err.message = 'Username or Password not recognized';
+        err.message = 'Email or Password not recognized';
         return next(err);
       } else {
         res.status(200).json({'authToken':jwt.sign(JSON.stringify(user), 'hogwash')});

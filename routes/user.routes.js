@@ -68,7 +68,7 @@ router.post('/users', (req,res,next) => {
     
   newUser.password = bcrypt.hashSync(newUser.password, 10);
 
-  console.log(newUser);
+
     
   User.create(newUser)
     .then(user => {
@@ -147,7 +147,6 @@ router.put('/users/:id', (req,res,next) => {
           })
             .then(response => {
     
-
               const {bio} = response.data.users[0];
               const duoId = response.data.users[0].id;
                         
@@ -157,13 +156,17 @@ router.put('/users/:id', (req,res,next) => {
                 err.message = 'Duolingo profile does not contain verification ID in user bio';
                 return next(err);
               }
-
-        
+              
               if (duoVerifierId.toString() === bio) {
                 User.findByIdAndUpdate(id, {verified:true, duoId } ,{new:true})
                   .then(response => {
                     res.status(200).json({'verification':'success'});
                   });
+              } else {
+                const err = new Error();
+                err.message = 'Code in Bio does not match verification ID provided';
+                err.status = 400;
+                return next(err);
               }
 
             });
