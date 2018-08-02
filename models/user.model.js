@@ -1,6 +1,7 @@
 'use strict';
 //================================== Import Dependencies ====================>
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new  mongoose.Schema({
   duoId: {
@@ -45,9 +46,16 @@ UserSchema.set('toObject', {
     ret.id = doc._id;
     delete ret.__v;
     delete ret._id;
+    delete ret.password;
 
   }
-})
+});
+
+UserSchema.method('verifyPassword', function (password) {
+  return bcrypt.compareSync(password, this.password);
+});
+
+
 
 
 module.exports = mongoose.model('user', UserSchema);

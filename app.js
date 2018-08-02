@@ -9,14 +9,18 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const {DBURL} = require('./config');
 const userRoute = require('./routes/user.routes');
+const challengeRoute = require('./routes/challenges.routes');
 const {PORT} = require('./config');
+const authRoute = require('./routes/auth.routes');
 
 //============================= JSON Parser ==========================>
 app.use(express.json());
 
 
 //================================== Routes ===========================>
-app.use('/api', (userRoute));
+app.use('/api', userRoute);
+app.use('/api', challengeRoute);
+app.use('/api', authRoute);
 
 
 //================================== Set Up Logger ====================>
@@ -25,12 +29,12 @@ app.use(morgan('common'));
 
 
 //===================================Connect to DB=====================>
-mongoose.connect(DBURL, (err) => {
+mongoose.connect(DBURL, { useNewUrlParser: true },  (err) => {
   if (err) {
-    return next(err);
+    console.log(err);
   }
   console.log('DB Connected');
-})
+});
 
 //================================== Error Handler ====================>
 app.use((err,req,res,next) => {
