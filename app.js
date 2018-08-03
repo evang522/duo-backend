@@ -46,7 +46,7 @@ app.use((err,req,res,next) => {
   error.status = err.status || 500;
   error.message = err.message || 'Internal error message'; 
   console.log(err);
-  res.json(error);
+  res.status(error.status).json(error);
 });
 
 // =========================== Begin HTTP service=====================>

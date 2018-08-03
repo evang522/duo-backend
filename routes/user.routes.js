@@ -147,28 +147,39 @@ router.put('/users/:id', (req,res,next) => {
           })
             .then(response => {
     
+            
+              if (!response.data.users.length) {
+                return res.status(200).json({
+                  'verificationStatus':'failure',
+                  'message':'No user found with this username'
+                });
+              }
+
               const {bio} = response.data.users[0];
               const duoId = response.data.users[0].id;
                         
               if (!bio) {
-                const err = new Error();
-                err.status = 400;
-                err.message = 'Duolingo profile does not contain verification ID in user bio';
-                return next(err);
-              }
-              
-              if (duoVerifierId.toString() === bio) {
-                User.findByIdAndUpdate(id, {verified:true, duoId } ,{new:true})
-                  .then(response => {
-                    res.status(200).json({'verification':'success'});
-                  });
-              } else {
-                const err = new Error();
-                err.message = 'Code in Bio does not match verification ID provided';
-                err.status = 400;
-                return next(err);
+                return res.status(200).json( {
+                  'verificationStatus':'failure',
+                  'message':'Duolingo profile does not contain verification ID in user bio'
+                });
               }
 
+              if (duoVerifierId.toString() === bio.trim()) {
+                User.findByIdAndUpdate(id, {verified:true, duoId } ,{new:true})
+                  .then(response => {
+                    res.status(200).json({'verificationStatus':'success'});
+                  });
+              } else {
+                return res.status(200).json( {
+                  'verificationStatus':'failure',
+                  'message':'Duolingo profile does not contain correct verification ID in user bio'
+                });
+              }
+
+            })
+            .catch(err => {
+              next(err);
             });
         })
         .catch(err => {
