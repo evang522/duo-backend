@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
-const bcrypt = require('bcryptjs');
 
 router.use('/auth/login', (req,res,next) => {
   const {email, password} = req.body;

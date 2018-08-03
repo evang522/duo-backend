@@ -12,7 +12,7 @@ const userRoute = require('./routes/user.routes');
 const challengeRoute = require('./routes/challenges.routes');
 const {PORT} = require('./config');
 const authRoute = require('./routes/auth.routes');
-
+const jwtAuth = require('./lib/utils/jwauth.utils');
 //================================== Set Up CORS ====================>
 app.use(cors());
 
@@ -22,9 +22,10 @@ app.use(express.json());
 
 
 //================================== Routes ===========================>
-app.use('/api', userRoute);
-app.use('/api', challengeRoute);
 app.use('/api', authRoute);
+app.use('/api', userRoute);
+app.use(jwtAuth);
+app.use('/api', challengeRoute);
 
 
 //================================== Set Up Logger ====================>

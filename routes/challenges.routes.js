@@ -7,6 +7,7 @@ const User = require('../models/user.model');
 
 //================================== GET Challenges ====================>
 router.get('/challenges', (req,res,next) => {
+  console.log(req.user, 'WWWWWWWWAAAAAAA');
   const query = {};
 
   const acceptedSearchFields = ['title','description','languages','members','alias']; // Avatar? 
