@@ -46,7 +46,7 @@ app.use((err,req,res,next) => {
   const error = new Error();
   error.status = err.status || 500;
   error.message = err.message || 'Internal error message'; 
-  console.log(err);
+  // console.log(err);
   res.status(error.status).json(error);
 });
 

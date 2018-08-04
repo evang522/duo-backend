@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
+const {JWT_SECRET} = require('../config');
 
 router.use('/auth/login', (req,res,next) => {
   const {email, password} = req.body;
@@ -32,7 +33,7 @@ router.use('/auth/login', (req,res,next) => {
         err.message = 'Email or Password not recognized';
         return next(err);
       } else {
-        res.status(200).json({'authToken':jwt.sign(JSON.stringify(user), 'hogwash')});
+        res.status(200).json({'authToken':jwt.sign(JSON.stringify(user), JWT_SECRET)});
       }
 
 

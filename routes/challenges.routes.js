@@ -7,7 +7,8 @@ const User = require('../models/user.model');
 
 //================================== GET Challenges ====================>
 router.get('/challenges', (req,res,next) => {
-  console.log(req.user, 'WWWWWWWWAAAAAAA');
+
+  
   const query = {};
 
   const acceptedSearchFields = ['title','description','languages','members','alias']; // Avatar? 
@@ -36,7 +37,8 @@ router.post('/challenges', (req,res,next) => {
   const newChallenge = {};
   let err; 
 
-  console.log(req.body);
+  const userId = req.user.id;
+
   requiredFields.forEach(field => {
     if (!(field in req.body)) {
       const _err = new Error();
@@ -56,7 +58,7 @@ router.post('/challenges', (req,res,next) => {
   Challenge.create(newChallenge)
     .then(challenge => {
       //TODO REPLACE PLACEHOLDER WITH USERID
-      Challenge.findByIdAndUpdate(challenge.id, {$push: {'members':'507f1f77bcf86cd799439011', 'admins':'507f1f77bcf86cd799439011'}}, {new:true})
+      Challenge.findByIdAndUpdate(challenge.id, {$push: {'members':userId, 'admins':userId}}, {new:true})
         .then(update => {
           res.status(201).json(update);
         });

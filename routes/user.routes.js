@@ -32,6 +32,19 @@ router.get('/users', (req,res,next) => {
 });
 
 
+//================================== Get User By ID ====================>
+router.get('/users/:id', (req,res,next) => {
+  const {id} = req.params;
+ 
+  User.findByIdAndUpdate(id)
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(next);
+});
+
+
+
 //==================================== Create new User =======================>
 
 router.post('/users', (req,res,next) => {
